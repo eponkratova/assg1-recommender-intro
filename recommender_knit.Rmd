@@ -3,10 +3,6 @@ title: "Recommender system Assignment"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 It is my second attempt to finish the specialization 
 on Recommender systems from [University of Minnesota](https://www.coursera.org/specializations/recommender-systems) but unlike the first time, I am attempting to complete all the assignments not only in Java but also in R - for the practice sake.
 
@@ -25,7 +21,8 @@ dataset <- gsheet2tbl(url)
 
 1. Deliverable i.e. calulcation of mean rating. 
 
-_Task_: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).
+**Task**: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).
+
 ```{r}
 
 dataset_mean_1 <- data.frame(colMeans(dataset, na.rm = TRUE))
@@ -35,8 +32,9 @@ renamed_mean_1 <- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mea
 ordered_mean_1 <- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)
 ```
 The ranking of top 3 movies based on average.
-Movie  | Score
-------------- | -------------
-318: Shawshank Redemption, The (1994)  | 3.6
-260: Star Wars: Episode IV - A New Hope (1977)  | 3.27
-541: Blade Runner (1982)  | 3.22
+
+| Movie                                          | Score |
+|------------------------------------------------|-------|
+| 318: Shawshank Redemption, The (1994)          | 3.6   |
+| 260: Star Wars: Episode IV - A New Hope (1977) | 3.27  |
+| 541: Blade Runner (1982)                       | 3.22  |
