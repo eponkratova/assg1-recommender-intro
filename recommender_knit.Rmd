@@ -1,0 +1,42 @@
+---
+title: "Recommender system Assignment"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+It is my second attempt to finish the specialization 
+on Recommender systems from [University of Minnesota](https://www.coursera.org/specializations/recommender-systems) but unlike the first time, I am attempting to complete all the assignments not only in Java but also in R - for the practice sake.
+
+### Course #1 - Introduction to Recommender Systems: Non-Personalized and Content-Based
+
+The first assignment in the course ["Introduction to Recommender Systems: Non-Personalized and Content-Based"](https://www.coursera.org/learn/recommender-systems-introduction) will "explore non-personalized and lightly-personalized recommendations" and includes sever deliverables with each deliverable representing a different analysis of the data provided."The first three deliverables represent non-personalized summary statistics; the next two represent product association using two different mechanisms (we aren't using lift here because of how similar the popularity levels are). The last two represent a demographic analysis to explore whether using gender would be wise given this dataset."
+
+```{r }
+## Read the dataset uploaded at Google Drive
+install.packages('gsheet', repos="http://cran.rstudio.com/")
+library('gsheet')
+url <- 'https://docs.google.com/spreadsheets/d/1XDBRCYFTxsw27AivxJ5pWxDHN0WA6GqSP46PVe2BCQ4/edit?usp=sharing'
+dataset <- gsheet2tbl(url)
+```
+
+
+1. Deliverable i.e. calulcation of mean rating. 
+
+_Task_: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).
+```{r}
+
+dataset_mean_1 <- data.frame(colMeans(dataset, na.rm = TRUE))
+install.packages('plyr', repos="https://cran.r-project.org")
+library('plyr')
+renamed_mean_1 <- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mean'))
+ordered_mean_1 <- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)
+```
+The ranking of top 3 movies based on average.
+Movie  | Score
+------------- | -------------
+318: Shawshank Redemption, The (1994)  | 3.6
+260: Star Wars: Episode IV - A New Hope (1977)  | 3.27
+541: Blade Runner (1982)  | 3.22
