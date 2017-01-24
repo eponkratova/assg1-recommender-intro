@@ -28,6 +28,7 @@ renamed_mean_1 <- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mea
 ordered_mean_1 <- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)
 ```
 **Result**: The ranking of top 3 movies based on average.
+
 | Movie                                          | Score |
 |------------------------------------------------|-------|
 | 318: Shawshank Redemption, The (1994)          | 3.6   |
@@ -44,6 +45,7 @@ renamed_ordered_count <- rename(dataset_count, c('colSums..is.na.dataset..'='Mea
 ordered_count <- head(renamed_ordered_count[order(-renamed_ordered_count$Mean),,drop=FALSE],n=5)
 ```
 **Result**: The ranking of top 3 movies based on count.
+
 | Movie                                          | Count |
 |------------------------------------------------|-------|
 | 1: Toy Story (1995)                            | 17    |
@@ -61,6 +63,7 @@ renamed_positive <- rename(dataset_positive, c('colCounts.dataset.1.21.......4..
 ordered_count <- head(renamed_positive[order(-renamed_positive$Mean),,drop=FALSE],n=4)
 ```
 **Result**: The ranking of top 3 movies based on "liking".
+
 | Movie                                          | %    |
 |------------------------------------------------|------|
 | 318: Shawshank,Redemption, The (1994)          | 0.7  |
