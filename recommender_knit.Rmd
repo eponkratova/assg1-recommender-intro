@@ -9,7 +9,6 @@ on Recommender systems from [University of Minnesota](https://www.coursera.org/s
 ### Course #1 - Introduction to Recommender Systems: Non-Personalized and Content-Based
 
 The first assignment in the course ["Introduction to Recommender Systems: Non-Personalized and Content-Based"](https://www.coursera.org/learn/recommender-systems-introduction) will "explore non-personalized and lightly-personalized recommendations" and includes sever deliverables with each deliverable representing a different analysis of the data provided."The first three deliverables represent non-personalized summary statistics; the next two represent product association using two different mechanisms (we aren't using lift here because of how similar the popularity levels are). The last two represent a demographic analysis to explore whether using gender would be wise given this dataset."
-
 ```{r }
 ## Read the dataset uploaded at Google Drive
 install.packages('gsheet', repos="http://cran.rstudio.com/")
@@ -18,10 +17,8 @@ url <- 'https://docs.google.com/spreadsheets/d/1XDBRCYFTxsw27AivxJ5pWxDHN0WA6GqS
 dataset <- gsheet2tbl(url)
 ```
 
-1. Deliverable i.e. calulcation of mean rating. 
-
+**Deliverable #1** i.e. calulcation of mean rating. 
 **Task**: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).
-
 ```{r}
 
 dataset_mean_1 <- data.frame(colMeans(dataset, na.rm = TRUE))
@@ -30,17 +27,15 @@ library('plyr')
 renamed_mean_1 <- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mean'))
 ordered_mean_1 <- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)
 ```
-
-The ranking of top 3 movies based on average.
-
+**Result**: The ranking of top 3 movies based on average.
 | Movie                                          | Score |
 |------------------------------------------------|-------|
 | 318: Shawshank Redemption, The (1994)          | 3.6   |
 | 260: Star Wars: Episode IV - A New Hope (1977) | 3.27  |
 | 541: Blade Runner (1982)                       | 3.22  |
 
-2. Deliverable i.e. rating count (popularity)
 
+**Deliverable #2** i.e. rating count (popularity).
 **Task**: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).
 ```{r}
 dataset_count <- data.frame(colSums(!is.na(dataset)))
@@ -48,11 +43,26 @@ library('plyr')
 renamed_ordered_count <- rename(dataset_count, c('colSums..is.na.dataset..'='Mean'))
 ordered_count <- head(renamed_ordered_count[order(-renamed_ordered_count$Mean),,drop=FALSE],n=5)
 ```
-
-The ranking of top 3 movies based on count.
-
+**Result**: The ranking of top 3 movies based on count.
 | Movie                                          | Count |
 |------------------------------------------------|-------|
 | 1: Toy Story (1995)                            | 17    |
 | 593: Silence of the Lambs, The (1991)          | 16    |
 | 260: Star Wars: Episode IV - A New Hope (1977) | 15    |
+
+**Deliverable #3** i.e. % of ratings 4+ (liking).
+**Task**: Calculate the percentage of ratings for each movie that are 4 or higher. Order with the highest percentage first, and submit the top three (along with the percentage for the top two). Notice that the three different measures of "best" reflect different priorities and give different results; this should help you see why you need to be thoughtful about what metrics you use.
+```{r}
+install.packages('matrixStats')
+library('matrixStats')
+dataset_positive <- data.frame(colCounts(dataset[1:21,]>=4, value=TRUE, na.rm=TRUE, drop = FALSE) / colSums(!is.na(dataset)))
+library('plyr')
+renamed_positive <- rename(dataset_positive, c('colCounts.dataset.1.21.......4..value...TRUE..na.rm...TRUE..drop...FALSE..colSums..is.na.dataset..'='Mean'))
+ordered_count <- head(renamed_positive[order(-renamed_positive$Mean),,drop=FALSE],n=4)
+```
+**Result**: The ranking of top 3 movies based on "liking".
+| Movie                                          | %    |
+|------------------------------------------------|------|
+| 318: Shawshank,Redemption, The (1994)          | 0.7  |
+| 260: Star Wars:,Episode IV - A New Hope (1977) | 0.53 |
+| 3578: Gladiator,(2000)                         | 0.5  |
