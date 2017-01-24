@@ -18,7 +18,6 @@ url <- 'https://docs.google.com/spreadsheets/d/1XDBRCYFTxsw27AivxJ5pWxDHN0WA6GqS
 dataset <- gsheet2tbl(url)
 ```
 
-
 1. Deliverable i.e. calulcation of mean rating. 
 
 **Task**: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).
@@ -31,6 +30,7 @@ library('plyr')
 renamed_mean_1 <- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mean'))
 ordered_mean_1 <- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)
 ```
+
 The ranking of top 3 movies based on average.
 
 | Movie                                          | Score |
@@ -38,3 +38,21 @@ The ranking of top 3 movies based on average.
 | 318: Shawshank Redemption, The (1994)          | 3.6   |
 | 260: Star Wars: Episode IV - A New Hope (1977) | 3.27  |
 | 541: Blade Runner (1982)                       | 3.22  |
+
+2. Deliverable i.e. rating count (popularity)
+
+**Task**: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).
+```{r}
+dataset_count <- data.frame(colSums(!is.na(dataset)))
+library('plyr')
+renamed_ordered_count <- rename(dataset_count, c('colSums..is.na.dataset..'='Mean'))
+ordered_count <- head(renamed_ordered_count[order(-renamed_ordered_count$Mean),,drop=FALSE],n=5)
+```
+
+The ranking of top 3 movies based on count.
+
+| Movie                                          | Count |
+|------------------------------------------------|-------|
+| 1: Toy Story (1995)                            | 17    |
+| 593: Silence of the Lambs, The (1991)          | 16    |
+| 260: Star Wars: Episode IV - A New Hope (1977) | 15    |
