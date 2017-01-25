@@ -131,15 +131,12 @@ install.packages('gsheet', repos=&quot;http://cran.rstudio.com/&quot;)</code></p
 <pre><code>## package 'gsheet' successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\katep\AppData\Local\Temp\RtmpsfzHYd\downloaded_packages</code></pre>
+##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
 <pre class="r"><code>library('gsheet')
 url &lt;- 'https://docs.google.com/spreadsheets/d/1XDBRCYFTxsw27AivxJ5pWxDHN0WA6GqSP46PVe2BCQ4/edit?usp=sharing'
 dataset &lt;- gsheet2tbl(url)</code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<ol style="list-style-type: decimal">
-<li>Deliverable i.e. calulcation of mean rating.</li>
-</ol>
-<p><strong>Task</strong>: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).</p>
+<p><strong>Deliverable #1</strong> i.e. calulcation of mean rating. <strong>Task</strong>: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).</p>
 <pre class="r"><code>dataset_mean_1 &lt;- data.frame(colMeans(dataset, na.rm = TRUE))
 install.packages('plyr', repos=&quot;https://cran.r-project.org&quot;)</code></pre>
 <pre><code>## Installing package into 'C:/Users/katep/OneDrive/Documents/R/win-library/3.3'
@@ -147,11 +144,11 @@ install.packages('plyr', repos=&quot;https://cran.r-project.org&quot;)</code></p
 <pre><code>## package 'plyr' successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\katep\AppData\Local\Temp\RtmpsfzHYd\downloaded_packages</code></pre>
+##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
 <pre class="r"><code>library('plyr')
 renamed_mean_1 &lt;- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mean'))
 ordered_mean_1 &lt;- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)</code></pre>
-<p>The ranking of top 3 movies based on average.</p>
+<p><strong>Result</strong>: The ranking of top 3 movies based on average.</p>
 <table>
 <thead>
 <tr class="header">
@@ -174,15 +171,12 @@ ordered_mean_1 &lt;- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE
 </tr>
 </tbody>
 </table>
-<ol start="2" style="list-style-type: decimal">
-<li>Deliverable i.e. rating count (popularity)</li>
-</ol>
-<p><strong>Task</strong>: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).</p>
+<p><strong>Deliverable #2</strong> i.e. rating count (popularity). <strong>Task</strong>: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).</p>
 <pre class="r"><code>dataset_count &lt;- data.frame(colSums(!is.na(dataset)))
 library('plyr')
 renamed_ordered_count &lt;- rename(dataset_count, c('colSums..is.na.dataset..'='Mean'))
 ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean),,drop=FALSE],n=5)</code></pre>
-<p>The ranking of top 3 movies based on count.</p>
+<p><strong>Result</strong>: The ranking of top 3 movies based on count.</p>
 <table>
 <thead>
 <tr class="header">
@@ -202,6 +196,101 @@ ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean
 <tr class="odd">
 <td align="left">260: Star Wars: Episode IV - A New Hope (1977)</td>
 <td align="left">15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliverable #3</strong> i.e. % of ratings 4+ (liking). <strong>Task</strong>: Calculate the percentage of ratings for each movie that are 4 or higher. Order with the highest percentage first, and submit the top three (along with the percentage for the top two). Notice that the three different measures of “best” reflect different priorities and give different results; this should help you see why you need to be thoughtful about what metrics you use.</p>
+<pre class="r"><code>install.packages('matrixStats', repos=&quot;https://cran.r-project.org&quot;)</code></pre>
+<pre><code>## Installing package into 'C:/Users/katep/OneDrive/Documents/R/win-library/3.3'
+## (as 'lib' is unspecified)</code></pre>
+<pre><code>## package 'matrixStats' successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
+<pre class="r"><code>library('matrixStats')</code></pre>
+<pre><code>## matrixStats v0.51.0 (2016-10-08) successfully loaded. See ?matrixStats for help.</code></pre>
+<pre><code>## 
+## Attaching package: 'matrixStats'</code></pre>
+<pre><code>## The following object is masked from 'package:plyr':
+## 
+##     count</code></pre>
+<pre class="r"><code>dataset_positive &lt;- data.frame(colCounts(dataset[1:21,]&gt;=4, value=TRUE, na.rm=TRUE, drop = FALSE) / colSums(!is.na(dataset)))
+renamed_positive &lt;- rename(dataset_positive, c('colCounts.dataset.1.21.......4..value...TRUE..na.rm...TRUE..drop...FALSE..colSums..is.na.dataset..'='Mean'))
+ordered_count &lt;- head(renamed_positive[order(-renamed_positive$Mean),,drop=FALSE],n=4)</code></pre>
+<p><strong>Result</strong>: The ranking of top 3 movies based on “liking”.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Movie</th>
+<th align="left">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">318: Shawshank,Redemption, The (1994)</td>
+<td align="left">0.7</td>
+</tr>
+<tr class="even">
+<td align="left">260: Star Wars:,Episode IV - A New Hope (1977)</td>
+<td align="left">0.53</td>
+</tr>
+<tr class="odd">
+<td align="left">3578: Gladiator,(2000)</td>
+<td align="left">0.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliverable #4</strong> i.e. top movies for someone who has seen Toy Story. <strong>Task</strong>: Calculate movies that most often occur with Movie #1: Toy Story, using the (x+y)/x method described in class. In other words, for each movie, calculate the percentage of Toy Story raters who also rated that movie. Order with the highest percentage first, and submit the top 3 (along with the correlations for the top two). Note, you will have ties – to break the ties, use the lowest-numbered movie as the higher-ranked one. In other words, if Movies 541 and 318 are tied, then 318 gets the higher rank.</p>
+<pre class="r"><code>subset_toy_story &lt;- dataset[!is.na(dataset$X1..Toy.Story..1995.),]
+dataset_toy_story &lt;- data.frame(colCounts(!is.na(subset_toy_story))) / NROW(subset(subset_toy_story, select=c(&quot;X1..Toy.Story..1995.&quot;)))
+library('plyr')
+ordered_dataset_toy_story &lt;- head(dataset_toy_story[order(-dataset_toy_story$'colCounts..is.na.subset_toy_story..'),,drop = FALSE], n=6)</code></pre>
+<p><strong>Result</strong>: The ranking of top 3 movies for someone who has seen Toy Story.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Movie</th>
+<th align="left">Corr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">260: Star Wars: Episode IV - A New Hope (1977)</td>
+<td align="left">0.82</td>
+</tr>
+<tr class="even">
+<td align="left">593: Silence of the Lambs, The (1991)</td>
+<td align="left">0.76</td>
+</tr>
+<tr class="odd">
+<td align="left">2916: Total Recall (1990)</td>
+<td align="left">0.65</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliverable #5</strong> i.e. correlation with Toy Story. <strong>Task</strong>: Calculate the correlation between the vectors of ratings for Toy Story and each other movie. You can use the built-in CORREL() function. Order by the highest correlation (positive only) and submit the top 3 along with the correlation values for the top 2. Notice the differences between co-occurrence and correlation; these metrics are showing different types of relationships.</p>
+<pre class="r"><code>corr_toy_story &lt;- data.frame(cor(dataset, dataset$X1..Toy.Story..1995., use=&quot;pairwise.complete.obs&quot;))
+ordered_corr_toy_story &lt;- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),,drop=FALSE], n=4)</code></pre>
+<p><strong>Result</strong>: The ranking of top 3 movies based on correlation with Toy Story.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Movie</th>
+<th align="left">Corr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">318: Shawshank Redemption, The (1994)</td>
+<td align="left">0.89</td>
+</tr>
+<tr class="even">
+<td align="left">34: Babe (1995)</td>
+<td align="left">0.811</td>
+</tr>
+<tr class="odd">
+<td align="left">296: Pulp Fiction (1994)</td>
+<td align="left">0.71</td>
 </tr>
 </tbody>
 </table>
