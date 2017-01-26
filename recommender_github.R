@@ -23,7 +23,16 @@ library('plyr')
 renamed_positive <- rename(dataset_positive, c('colCounts.dataset.1.21.......4..value...TRUE..na.rm...TRUE..drop...FALSE..colSums..is.na.dataset..'='Mean'))
 ordered_count <- head(renamed_positive[order(-renamed_positive$Mean),,drop=FALSE],n=4)
 
-#test - dataset_with_toy_story <- colCounts(!is.na(dataset[1:21,c(5,9)]))
 subset_toy_story <- dataset[!is.na(dataset$X1..Toy.Story..1995.),]
 dataset_toy_story <- data.frame(colCounts(!is.na(subset_toy_story))) / NROW(subset(subset_toy_story, select=c("X1..Toy.Story..1995.")))
 ordered_dataset_toy_story <- head(dataset_toy_story[order(-dataset_toy_story$'colCounts..is.na.subset_toy_story..'),,drop = FALSE], n=8)
+
+corr_toy_story <- data.frame(cor(dataset, dataset$X1..Toy.Story..1995., use="pairwise.complete.obs"))
+ordered_corr_toy_story <- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),,drop=FALSE], n=4)
+
+pref_by_fem <- dataset[dataset$'Gender..1..F..0.M.'==1,]
+dataset_mean_fem <- data.frame(colMeans(pref_by_fem, na.rm = TRUE))
+pref_by_mal <- dataset[dataset$'Gender..1..F..0.M.'==0,]
+dataset_mean_mal <- data.frame(colMeans(pref_by_mal, na.rm = TRUE))
+dif_btw_male_fem <- max((dataset_mean_mal - dataset_mean_fem)[(dataset_mean_mal - dataset_mean_fem)!=max(dataset_mean_mal - dataset_mean_fem)])
+dif_btw_fem_mal <- max((dataset_mean_fem  - dataset_mean_mal)[(dataset_mean_fem  - dataset_mean_mal)!=max(dataset_mean_fem  - dataset_mean_mal)])

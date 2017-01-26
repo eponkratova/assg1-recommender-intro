@@ -131,12 +131,13 @@ install.packages('gsheet', repos=&quot;http://cran.rstudio.com/&quot;)</code></p
 <pre><code>## package 'gsheet' successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
+##  C:\Users\katep\AppData\Local\Temp\RtmpIb94Vq\downloaded_packages</code></pre>
 <pre class="r"><code>library('gsheet')
 url &lt;- 'https://docs.google.com/spreadsheets/d/1XDBRCYFTxsw27AivxJ5pWxDHN0WA6GqSP46PVe2BCQ4/edit?usp=sharing'
 dataset &lt;- gsheet2tbl(url)</code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<p><strong>Deliverable #1</strong> i.e. calulcation of mean rating. <strong>Task</strong>: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).</p>
+<p><strong>Deliverable #1</strong> i.e. calulcation of mean rating.<br />
+<strong>Task</strong>: calculate the mean rating for each movie, order with the highest rating listed first, and submit the top three (along with the mean scores for the top two).</p>
 <pre class="r"><code>dataset_mean_1 &lt;- data.frame(colMeans(dataset, na.rm = TRUE))
 install.packages('plyr', repos=&quot;https://cran.r-project.org&quot;)</code></pre>
 <pre><code>## Installing package into 'C:/Users/katep/OneDrive/Documents/R/win-library/3.3'
@@ -144,10 +145,10 @@ install.packages('plyr', repos=&quot;https://cran.r-project.org&quot;)</code></p
 <pre><code>## package 'plyr' successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
+##  C:\Users\katep\AppData\Local\Temp\RtmpIb94Vq\downloaded_packages</code></pre>
 <pre class="r"><code>library('plyr')
 renamed_mean_1 &lt;- rename(dataset_mean_1,c('colMeans.dataset..na.rm...TRUE.'='Mean'))
-ordered_mean_1 &lt;- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE],n=4)</code></pre>
+ordered_mean_1 &lt;- head(renamed_mean_1[order(-renamed_mean_1$Mean),, drop = FALSE], n = 4)</code></pre>
 <p><strong>Result</strong>: The ranking of top 3 movies based on average.</p>
 <table>
 <thead>
@@ -171,11 +172,11 @@ ordered_mean_1 &lt;- head(renamed_mean_1[order(-renamed_mean_1$Mean),,drop=FALSE
 </tr>
 </tbody>
 </table>
-<p><strong>Deliverable #2</strong> i.e. rating count (popularity). <strong>Task</strong>: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).</p>
+<p><strong>Deliverable #2</strong> i.e. rating count (popularity).<br />
+<strong>Task</strong>: Count the number of ratings for each movie, order with the most number of ratings first, and submit the top three (along with the counts for the top two).</p>
 <pre class="r"><code>dataset_count &lt;- data.frame(colSums(!is.na(dataset)))
-library('plyr')
 renamed_ordered_count &lt;- rename(dataset_count, c('colSums..is.na.dataset..'='Mean'))
-ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean),,drop=FALSE],n=5)</code></pre>
+ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean), , drop = FALSE], n = 5)</code></pre>
 <p><strong>Result</strong>: The ranking of top 3 movies based on count.</p>
 <table>
 <thead>
@@ -199,14 +200,15 @@ ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean
 </tr>
 </tbody>
 </table>
-<p><strong>Deliverable #3</strong> i.e. % of ratings 4+ (liking). <strong>Task</strong>: Calculate the percentage of ratings for each movie that are 4 or higher. Order with the highest percentage first, and submit the top three (along with the percentage for the top two). Notice that the three different measures of “best” reflect different priorities and give different results; this should help you see why you need to be thoughtful about what metrics you use.</p>
+<p><strong>Deliverable #3</strong> i.e. % of ratings 4+ (liking).<br />
+<strong>Task</strong>: Calculate the percentage of ratings for each movie that are 4 or higher. Order with the highest percentage first, and submit the top three (along with the percentage for the top two). Notice that the three different measures of “best” reflect different priorities and give different results; this should help you see why you need to be thoughtful about what metrics you use.</p>
 <pre class="r"><code>install.packages('matrixStats', repos=&quot;https://cran.r-project.org&quot;)</code></pre>
 <pre><code>## Installing package into 'C:/Users/katep/OneDrive/Documents/R/win-library/3.3'
 ## (as 'lib' is unspecified)</code></pre>
 <pre><code>## package 'matrixStats' successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\katep\AppData\Local\Temp\Rtmp0cqVB4\downloaded_packages</code></pre>
+##  C:\Users\katep\AppData\Local\Temp\RtmpIb94Vq\downloaded_packages</code></pre>
 <pre class="r"><code>library('matrixStats')</code></pre>
 <pre><code>## matrixStats v0.51.0 (2016-10-08) successfully loaded. See ?matrixStats for help.</code></pre>
 <pre><code>## 
@@ -214,9 +216,9 @@ ordered_count &lt;- head(renamed_ordered_count[order(-renamed_ordered_count$Mean
 <pre><code>## The following object is masked from 'package:plyr':
 ## 
 ##     count</code></pre>
-<pre class="r"><code>dataset_positive &lt;- data.frame(colCounts(dataset[1:21,]&gt;=4, value=TRUE, na.rm=TRUE, drop = FALSE) / colSums(!is.na(dataset)))
+<pre class="r"><code>dataset_positive &lt;- data.frame(colCounts(dataset[1:21,] &gt;= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(dataset)))
 renamed_positive &lt;- rename(dataset_positive, c('colCounts.dataset.1.21.......4..value...TRUE..na.rm...TRUE..drop...FALSE..colSums..is.na.dataset..'='Mean'))
-ordered_count &lt;- head(renamed_positive[order(-renamed_positive$Mean),,drop=FALSE],n=4)</code></pre>
+ordered_count &lt;- head(renamed_positive[order(-renamed_positive$Mean), , drop = FALSE], n = 4)</code></pre>
 <p><strong>Result</strong>: The ranking of top 3 movies based on “liking”.</p>
 <table>
 <thead>
@@ -240,11 +242,11 @@ ordered_count &lt;- head(renamed_positive[order(-renamed_positive$Mean),,drop=FA
 </tr>
 </tbody>
 </table>
-<p><strong>Deliverable #4</strong> i.e. top movies for someone who has seen Toy Story. <strong>Task</strong>: Calculate movies that most often occur with Movie #1: Toy Story, using the (x+y)/x method described in class. In other words, for each movie, calculate the percentage of Toy Story raters who also rated that movie. Order with the highest percentage first, and submit the top 3 (along with the correlations for the top two). Note, you will have ties – to break the ties, use the lowest-numbered movie as the higher-ranked one. In other words, if Movies 541 and 318 are tied, then 318 gets the higher rank.</p>
+<p><strong>Deliverable #4</strong> i.e. top movies for someone who has seen Toy Story.<br />
+<strong>Task</strong>: Calculate movies that most often occur with Movie #1: Toy Story, using the (x+y)/x method described in class. In other words, for each movie, calculate the percentage of Toy Story raters who also rated that movie. Order with the highest percentage first, and submit the top 3 (along with the correlations for the top two). Note, you will have ties – to break the ties, use the lowest-numbered movie as the higher-ranked one. In other words, if Movies 541 and 318 are tied, then 318 gets the higher rank.</p>
 <pre class="r"><code>subset_toy_story &lt;- dataset[!is.na(dataset$X1..Toy.Story..1995.),]
 dataset_toy_story &lt;- data.frame(colCounts(!is.na(subset_toy_story))) / NROW(subset(subset_toy_story, select=c(&quot;X1..Toy.Story..1995.&quot;)))
-library('plyr')
-ordered_dataset_toy_story &lt;- head(dataset_toy_story[order(-dataset_toy_story$'colCounts..is.na.subset_toy_story..'),,drop = FALSE], n=6)</code></pre>
+ordered_dataset_toy_story &lt;- head(dataset_toy_story[order(-dataset_toy_story$'colCounts..is.na.subset_toy_story..'),, drop = FALSE], n = 6)</code></pre>
 <p><strong>Result</strong>: The ranking of top 3 movies for someone who has seen Toy Story.</p>
 <table>
 <thead>
@@ -268,9 +270,10 @@ ordered_dataset_toy_story &lt;- head(dataset_toy_story[order(-dataset_toy_story$
 </tr>
 </tbody>
 </table>
-<p><strong>Deliverable #5</strong> i.e. correlation with Toy Story. <strong>Task</strong>: Calculate the correlation between the vectors of ratings for Toy Story and each other movie. You can use the built-in CORREL() function. Order by the highest correlation (positive only) and submit the top 3 along with the correlation values for the top 2. Notice the differences between co-occurrence and correlation; these metrics are showing different types of relationships.</p>
+<p><strong>Deliverable #5</strong> i.e. correlation with Toy Story.<br />
+<strong>Task</strong>: Calculate the correlation between the vectors of ratings for Toy Story and each other movie. You can use the built-in CORREL() function. Order by the highest correlation (positive only) and submit the top 3 along with the correlation values for the top 2. Notice the differences between co-occurrence and correlation; these metrics are showing different types of relationships.</p>
 <pre class="r"><code>corr_toy_story &lt;- data.frame(cor(dataset, dataset$X1..Toy.Story..1995., use=&quot;pairwise.complete.obs&quot;))
-ordered_corr_toy_story &lt;- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),,drop=FALSE], n=4)</code></pre>
+ordered_corr_toy_story &lt;- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),, drop = FALSE], n = 4)</code></pre>
 <p><strong>Result</strong>: The ranking of top 3 movies based on correlation with Toy Story.</p>
 <table>
 <thead>
@@ -294,6 +297,25 @@ ordered_corr_toy_story &lt;- head(corr_toy_story[order(-corr_toy_story$'cor.data
 </tr>
 </tbody>
 </table>
+<p><strong>Deliverable #6</strong> i.e. mean rating difference by gender.<br />
+<strong>Task</strong>: First, recompute the mean rating for each movie separately for males and for females. And calculate the overall mean rating (across all ratings) for males and females. Submit the two movies that have the greatest differences (one where men are most above women, and one where women are most above men) along with the differences in average. Also submit the difference in overall rating averages (female average - male average).</p>
+<pre class="r"><code>pref_by_fem &lt;- dataset[dataset$'Gender..1..F..0.M.'==1,]
+dataset_mean_fem &lt;- colMeans(pref_by_fem, na.rm = TRUE)
+global_mean_fem &lt;- mean(dataset_mean_fem[-(1:2)])
+pref_by_mal &lt;- dataset[dataset$'Gender..1..F..0.M.'==0,]
+dataset_mean_mal &lt;- colMeans(pref_by_mal, na.rm = TRUE)
+global_mean_mal &lt;- mean(dataset_mean_mal[-(1:2)])
+dif_btw_mal_fem &lt;- max((dataset_mean_mal - dataset_mean_fem)[(dataset_mean_mal - dataset_mean_fem)!=max(dataset_mean_mal - dataset_mean_fem)])
+dif_btw_fem_mal &lt;- max((dataset_mean_fem  - dataset_mean_mal)[(dataset_mean_fem  - dataset_mean_mal)!=max(dataset_mean_fem  - dataset_mean_mal)])
+global_dif_btw_fem_mal &lt;- global_mean_fem - global_mean_mal</code></pre>
+<p><strong>Result</strong>: Two movies that have the greatest differences along with the differences in average: - where men are most above wome: 1198: Raiders of the Lost Ark (1981) - 1.67 - where women are most above men: 34: Babe (1995) - 1.43 The difference in overall rating averages (female average - male average) is equal to 0.12</p>
+<p><strong>Deliverable #7</strong> i.e. the % of ratings 4+ separately for males and females.<br />
+<strong>Task</strong>: You’ll be asked to submit two movies as above (largest difference in each direction). And again you’ll indicate whether men or women are more likely to rate movies 4 stars or above.</p>
+<pre class="r"><code>positive_fem &lt;- data.frame(colCounts(pref_by_fem &gt;= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(pref_by_fem)))
+positive_mal &lt;- data.frame(colCounts(pref_by_mal &gt;= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(pref_by_mal)))
+posit_dif_btw_mal_fem &lt;- positive_mal - positive_fem
+posit_dif_btw_fem_mal &lt;- positive_fem - positive_mal</code></pre>
+<p><strong>Result</strong>: Two movies that have the greatest differences along with the differences in average: - where men are most above wome: 1198: Raiders of the Lost Ark (1981) - 0.5 - where women are most above men: 2396: Shakespeare in Love (1998) - 0.75 Women tend to rate movies 4 stars or above i.e. the difference is equal to 0.1036436 0.1036436</p>
 </div>
 
 
