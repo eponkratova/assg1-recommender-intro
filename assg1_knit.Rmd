@@ -1,12 +1,7 @@
 ---
-title: "Recommender system Assignment"
+title: "Assignment #1"
 output: html_document
 ---
-
-It is my second attempt to finish the specialization 
-on Recommender systems from [University of Minnesota](https://www.coursera.org/specializations/recommender-systems) but unlike the first time, I am attempting to complete all the assignments not only in Java but also in R - for the practice sake.
-
-### Course #1 - Introduction to Recommender Systems: Non-Personalized and Content-Based
 
 The first assignment in the course ["Introduction to Recommender Systems: Non-Personalized and Content-Based"](https://www.coursera.org/learn/recommender-systems-introduction) will "explore non-personalized and lightly-personalized recommendations" and includes sever deliverables with each deliverable representing a different analysis of the data provided."The first three deliverables represent non-personalized summary statistics; the next two represent product association using two different mechanisms (we aren't using lift here because of how similar the popularity levels are). The last two represent a demographic analysis to explore whether using gender would be wise given this dataset."
 ```{r }

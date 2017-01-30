@@ -30,7 +30,6 @@ ordered_dataset_toy_story <- head(dataset_toy_story[order(-dataset_toy_story$'co
 corr_toy_story <- data.frame(cor(dataset, dataset$X1..Toy.Story..1995., use="pairwise.complete.obs"))
 ordered_corr_toy_story <- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),,drop=FALSE], n=4)
 
-
 pref_by_fem <- dataset[dataset$'Gender..1..F..0.M.'==1,]
 dataset_mean_fem <- colMeans(pref_by_fem, na.rm = TRUE)
 global_mean_fem <- mean(dataset_mean_fem[-(1:2)])
@@ -47,3 +46,12 @@ library('plyr')
 positive_mal <- data.frame(colCounts(pref_by_mal >= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(pref_by_mal)))
 posit_dif_btw_mal_fem <- positive_mal - positive_fem
 posit_dif_btw_fem_mal <- positive_fem - positive_mal
+
+library('gsheet')
+url <- 'https://docs.google.com/spreadsheets/d/1EqUCgG3p4njvKzP6veLyB7PGqG0rasWKPueR9VzdDLA/edit?usp=sharing'
+dataset <- gsheet2tbl(url)
+dataset[dataset == 0] <- NA
+user_1 <- data.frame(colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
+user_2 <- data.frame(colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
+docs_user_1 <- user_1 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
+docs_user_2 <- user_2 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
