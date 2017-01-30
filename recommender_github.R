@@ -30,9 +30,20 @@ ordered_dataset_toy_story <- head(dataset_toy_story[order(-dataset_toy_story$'co
 corr_toy_story <- data.frame(cor(dataset, dataset$X1..Toy.Story..1995., use="pairwise.complete.obs"))
 ordered_corr_toy_story <- head(corr_toy_story[order(-corr_toy_story$'cor.dataset..dataset.X1..Toy.Story..1995...use....pairwise.complete.obs..'),,drop=FALSE], n=4)
 
+
 pref_by_fem <- dataset[dataset$'Gender..1..F..0.M.'==1,]
-dataset_mean_fem <- data.frame(colMeans(pref_by_fem, na.rm = TRUE))
+dataset_mean_fem <- colMeans(pref_by_fem, na.rm = TRUE)
+global_mean_fem <- mean(dataset_mean_fem[-(1:2)])
 pref_by_mal <- dataset[dataset$'Gender..1..F..0.M.'==0,]
-dataset_mean_mal <- data.frame(colMeans(pref_by_mal, na.rm = TRUE))
-dif_btw_male_fem <- max((dataset_mean_mal - dataset_mean_fem)[(dataset_mean_mal - dataset_mean_fem)!=max(dataset_mean_mal - dataset_mean_fem)])
+dataset_mean_mal <- colMeans(pref_by_mal, na.rm = TRUE)
+global_mean_mal <- mean(dataset_mean_mal[-(1:2)])
+dif_btw_mal_fem <- max((dataset_mean_mal - dataset_mean_fem)[(dataset_mean_mal - dataset_mean_fem)!=max(dataset_mean_mal - dataset_mean_fem)])
 dif_btw_fem_mal <- max((dataset_mean_fem  - dataset_mean_mal)[(dataset_mean_fem  - dataset_mean_mal)!=max(dataset_mean_fem  - dataset_mean_mal)])
+global_dif_btw_fem_mal <- global_mean_fem - global_mean_mal
+
+library('matrixStats')
+positive_fem <- data.frame(colCounts(pref_by_fem >= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(pref_by_fem)))
+library('plyr')
+positive_mal <- data.frame(colCounts(pref_by_mal >= 4, value = TRUE, na.rm = TRUE, drop = FALSE) / colSums(!is.na(pref_by_mal)))
+posit_dif_btw_mal_fem <- positive_mal - positive_fem
+posit_dif_btw_fem_mal <- positive_fem - positive_mal
