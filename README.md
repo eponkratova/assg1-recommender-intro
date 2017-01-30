@@ -1,7 +1,3 @@
----
-title: "Recommender system Assignments"
-output: html_document
----
 
 It is my second attempt to finish the specialization 
 on Recommender systems from [University of Minnesota](https://www.coursera.org/specializations/recommender-systems) but unlike the first time, I am attempting to complete all the assignments not only in Java but also in R - for the practice sake.
