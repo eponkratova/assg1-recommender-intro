@@ -12,4 +12,4 @@ See the code to the first assignment [here](https://github.com/eponkratova/recom
 
 In this assignment, one will hand-create and use some content-based profiles. He’ll go through a set of variations to see how certain features of the computation can introduce (or reduce) biases.
 
-See the code to the second assignment [here] ().
+See the code to the second assignment [here] (https://github.com/eponkratova/recommender-intro/blob/master/assg2.Rmd).
