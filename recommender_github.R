@@ -51,7 +51,21 @@ library('gsheet')
 url <- 'https://docs.google.com/spreadsheets/d/1EqUCgG3p4njvKzP6veLyB7PGqG0rasWKPueR9VzdDLA/edit?usp=sharing'
 dataset <- gsheet2tbl(url)
 dataset[dataset == 0] <- NA
-user_1 <- data.frame(colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
-user_2 <- data.frame(colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
-docs_user_1 <- user_1 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
-docs_user_2 <- user_2 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
+user_1 <- (colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
+user_2 <- (colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
+# docs_user_1 <- user_1 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
+# docs_user_2 <- user_2 * data.frame(colSums(dataset[1:20,2:11], na.rm = TRUE))
+test_0 <- as.matrix(dataset[2:2,2:11])
+test <- as.matrix(user_1)
+test2 <- crossprod(test_0*test)
+
+
+library('gsheet')
+url <- 'https://docs.google.com/spreadsheets/d/1EqUCgG3p4njvKzP6veLyB7PGqG0rasWKPueR9VzdDLA/edit?usp=sharing'
+dataset <- gsheet2tbl(url)
+user_1 <- (colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
+user_2 <- (colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
+test_1 <- (dataset[1:20,2:11])
+test <- for (i in 1:nrow(test_1)) {
+  print (test_1*user_1)
+}

@@ -1,0 +1,27 @@
+---
+title: "Assignment #2"
+output: html_document
+---
+**Deliverable #1** i.e. build and use a very basic profile.  
+**Task**: First, you will build a very simple profile of user preferences for attributes. In this profile, you’ll count the total the number of positive and negative evaluations associated with each attribute, and create a profile with the total score for each attribute for each user. For example, user 1’s score for “Family” will get a +1 from doc1 (positive evaluation) and a -1 from doc 19 (negative evaluation) for a total profile value of 0 (neutral). In contrast, user 2’s score for Europe will be +3 (+1 each for doc2, doc4, and doc17).
+You can compute the profiles and place them in the “User Profiles” section of the spreadsheet.
+Now compute the predicted score for each user for each document (a simple dot-product). Type in the answers to the following questions (answers may include already-rated articles) as part of the Quiz:
+
+Which document does the simple profile predict user 1 will like best?
+What score does that prediction get?
+How many documents does the model predict user 2 will dislike (prediction score that is negative)?
+
+Notice that this model is consistent with the users’ ratings -- it predicts liking for all the positive documents and disliking for all the negative ones.
+```{r}
+library('gsheet')
+url <- 'https://docs.google.com/spreadsheets/d/1EqUCgG3p4njvKzP6veLyB7PGqG0rasWKPueR9VzdDLA/edit?usp=sharing'
+dataset <- gsheet2tbl(url)
+user_1 <- (colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
+user_2 <- (colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
+dataset_subset <- (dataset[1:20,2:11])
+docs_liking_user_1 <- data.frame(rowSums(t(t(dataset_subset) * user_1)))
+docs_liking_user_2 <- data.frame(rowSums(t(t(dataset_subset) * user_2)))
+```
+**Result**:
+- User 1 likes best Doc 16 that got a prediction of 6;
+- User 2 doesn't like four documents.
