@@ -3,12 +3,10 @@ title: "Assignment #2"
 output: html_document
 ---
 **Deliverable #1** i.e. build and use a very basic profile.  
-**Task**: First, you will build a very simple profile of user preferences for attributes. In this profile, you’ll count the total the number of positive and negative evaluations associated with each attribute, and create a profile with the total score for each attribute for each user. For example, user 1’s score for “Family” will get a +1 from doc1 (positive evaluation) and a -1 from doc 19 (negative evaluation) for a total profile value of 0 (neutral). In contrast, user 2’s score for Europe will be +3 (+1 each for doc2, doc4, and doc17).
-You can compute the profiles and place them in the “User Profiles” section of the spreadsheet.
-Now compute the predicted score for each user for each document (a simple dot-product). Type in the answers to the following questions (answers may include already-rated articles) as part of the Quiz:
+**Task**: Type in the answers to the following questions (answers may include already-rated articles) as part of the Quiz:
 
-Which document does the simple profile predict user 1 will like best?
-What score does that prediction get?
+- Which document does the simple profile predict user 1 will like best?
+- What score does that prediction get?
 How many documents does the model predict user 2 will dislike (prediction score that is negative)?
 
 Notice that this model is consistent with the users’ ratings -- it predicts liking for all the positive documents and disliking for all the negative ones.
@@ -28,8 +26,9 @@ docs_liking_user_2 <- data.frame(rowSums(t(t(dataset_subset) * user_2)))
 
 **Deliverable #2** i.e. treat all articles as having unit weight.
 **Task**: Type in the answers to the following questions as part of the Quiz:
-Which document is now in second with this new model?
-What prediction score does it have?
+
+- Which document is now in second with this new model?
+- What prediction score does it have?
 ```{r}
 weighted_dataset <- (dataset[1:20,2:11]) / sqrt(rowSums(dataset[1:20,2:11]))
 user_1 <- (colSums(weighted_dataset*dataset$User.1, na.rm = TRUE))
@@ -44,3 +43,10 @@ docs_liking_user_2 <- data.frame(rowSums(t(t(weighted_dataset) * user_2)))
 **Task**: Type in the answers to the following questions into the Quiz:
 - Compare doc1 and doc9 for user1. What’s user1’s prediction for doc9 in the new IDF weighted model? See how there’s a dramatic difference from the prior model?
 - Now let’s look at user 2. Look at doc6. It was moderately positive before and now is slightly negative. Why did that change?
+```{r}
+idf <- 1 / (colSums(dataset[1:20,2:11]))
+docs_liking_user_1 <- data.frame(rowSums(t(t(weighted_dataset) * user_1 * idf)))
+docs_liking_user_2 <- data.frame(rowSums(t(t(weighted_dataset) * user_2 * idf)))
+```
+**Result**:
+- Document 9 has the prediction of 0.154761905 while in the previous model, it had a prediction of 1.
