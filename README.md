@@ -6,7 +6,7 @@ on Recommender systems from [University of Minnesota](https://www.coursera.org/s
 
 The first assignment in the course ["Introduction to Recommender Systems: Non-Personalized and Content-Based"](https://www.coursera.org/learn/recommender-systems-introduction) will "explore non-personalized and lightly-personalized recommendations" and includes sever deliverables with each deliverable representing a different analysis of the data provided."The first three deliverables represent non-personalized summary statistics; the next two represent product association using two different mechanisms (we aren't using lift here because of how similar the popularity levels are). The last two represent a demographic analysis to explore whether using gender would be wise given this dataset."
 
-See the code to the first assignment [here](https://github.com/eponkratova/recommender-intro/blob/master/assg1_knit.Rmd)
+See the code to the first assignment [here](https://github.com/eponkratova/recommender-intro/blob/master/assg1_knit.Rmd).
 
 ### Assignment # 2
 
