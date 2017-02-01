@@ -25,3 +25,22 @@ docs_liking_user_2 <- data.frame(rowSums(t(t(dataset_subset) * user_2)))
 **Result**:
 - User 1 likes best Doc 16 that got a prediction of 6;
 - User 2 doesn't like four documents.
+
+**Deliverable #2** i.e. treat all articles as having unit weight.
+**Task**: Type in the answers to the following questions as part of the Quiz:
+Which document is now in second with this new model?
+What prediction score does it have?
+```{r}
+weighted_dataset <- (dataset[1:20,2:11]) / sqrt(rowSums(dataset[1:20,2:11]))
+user_1 <- (colSums(weighted_dataset*dataset$User.1, na.rm = TRUE))
+user_2 <- (colSums(weighted_dataset*dataset$User.2, na.rm = TRUE))
+docs_liking_user_1 <- data.frame(rowSums(t(t(weighted_dataset) * user_1)))
+docs_liking_user_2 <- data.frame(rowSums(t(t(weighted_dataset) * user_2)))
+```
+**Result**:
+- Document 12 with the score of 1.69670394 came second.
+
+**Deliverable #3** i.e. model how common different terms are among all documents.
+**Task**: Type in the answers to the following questions into the Quiz:
+- Compare doc1 and doc9 for user1. What’s user1’s prediction for doc9 in the new IDF weighted model? See how there’s a dramatic difference from the prior model?
+- Now let’s look at user 2. Look at doc6. It was moderately positive before and now is slightly negative. Why did that change?

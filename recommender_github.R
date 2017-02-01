@@ -65,7 +65,12 @@ url <- 'https://docs.google.com/spreadsheets/d/1EqUCgG3p4njvKzP6veLyB7PGqG0rasWK
 dataset <- gsheet2tbl(url)
 user_1 <- (colSums(dataset[,2:11]*dataset$User.1, na.rm = TRUE))
 user_2 <- (colSums(dataset[,2:11]*dataset$User.2, na.rm = TRUE))
-test_1 <- (dataset[1:20,2:11])
-test <- for (i in 1:nrow(test_1)) {
-  print (test_1*user_1)
-}
+dataset_subset <- (dataset[1:20,2:11])
+docs_liking_user_1 <- data.frame(rowSums(t(t(dataset_subset) * user_1)))
+docs_liking_user_2 <- data.frame(rowSums(t(t(dataset_subset) * user_2)))
+
+weighted_dataset <- (dataset[1:20,2:11]) / sqrt(rowSums(dataset[1:20,2:11]))
+user_1 <- (colSums(weighted_dataset*dataset$User.1, na.rm = TRUE))
+user_2 <- (colSums(weighted_dataset*dataset$User.2, na.rm = TRUE))
+docs_liking_user_1 <- data.frame(rowSums(t(t(weighted_dataset) * user_1)))
+docs_liking_user_2 <- data.frame(rowSums(t(t(weighted_dataset) * user_2)))
